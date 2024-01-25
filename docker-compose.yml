@@ -7,7 +7,7 @@ services:
     restart: always
     networks:
       - proxy
-        labels:
+    labels:
       - traefik.enable=true
       - traefik.http.routers.bb.entrypoints=http
       - traefik.http.routers.bb.rule=Host(`buterland-beckerhook.mail.verst.eu`)
