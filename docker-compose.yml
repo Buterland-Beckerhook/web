@@ -1,0 +1,31 @@
+version: "3.3"
+
+services:
+  web:
+    image: ghcr.io/buterland-beckerhook/buterland-beckerhook:main
+    container_name: buterland-beckerhook
+    restart: always
+    networks:
+      - proxy
+        labels:
+      - traefik.enable=true
+      - traefik.http.routers.bb.entrypoints=http
+      - traefik.http.routers.bb.rule=Host(`buterland-beckerhook.mail.verst.eu`)
+      - traefik.http.routers.bb.middlewares=https-redirect@file
+
+      - traefik.http.routers.bb-sec.entrypoints=https
+      - traefik.http.routers.bb-sec.rule=Host(`buterland-beckerhook.mail.verst.eu`)
+      - traefik.http.routers.bb-sec.tls=true
+      - traefik.http.routers.bb-sec.tls.options=secure-tls@file
+      - traefik.http.routers.bb-sec.tls.certresolver=le
+
+      - traefik.http.services.bb.loadbalancer.server.port=80
+    logging:
+      driver: loki
+      options:
+        loki-url: https://391515:glc_eyJvIjoiNzk5NzUwIiwibiI6InN0YWNrLTU0MjEzMS1obC13cml0ZS1tYWlsc2VydmVyX2FybTY0IiwiayI6IldxVzMwMTBDTWo0eWpnMlo5MkdWc3kxMSIsIm0iOnsiciI6InByb2QtZXUtd2VzdC0zIn19@logs-prod-013.grafana.net/loki/api/v1/push
+
+networks:
+  proxy:
+    external: true
+    name: proxy
