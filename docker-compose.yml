@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   web:
-    image: ghcr.io/buterland-beckerhook/buterland-beckerhook:main
+    image: rverst/buterland-beckerhook:latest
     container_name: buterland-beckerhook
     restart: always
     networks:
